@@ -1,0 +1,701 @@
+:root {
+  --primary-dark: #1a1e2e;
+  --primary-medium: #2c3347;
+  --primary-light: #3d4663;
+  --secondary-dark: #94512c;
+  --secondary-medium: #e07a3d;
+  --secondary-light: #f9a66c;
+  --accent-dark: #ffd4a3;
+  --accent-light: #ffecd6;
+  --table-color: #1b5e20;
+  --table-border: #2e7d32;
+  --card-bg: rgba(32, 36, 56, 0.85);
+  --card-border: rgba(249, 166, 108, 0.3);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  background-color: var(--primary-dark);
+  color: var(--accent-light);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: linear-gradient(rgba(26, 30, 46, 0.85), rgba(26, 30, 46, 0.85)), url('/src/assets/pirate-map-bg.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Pirata One', cursive;
+  color: var(--secondary-light);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.btn {
+  background-color: var(--secondary-medium);
+  color: var(--accent-light);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
+.btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+  background-color: var(--secondary-medium);
+  color: var(--accent-light);
+}
+
+.btn-secondary {
+  background-color: var(--primary-light);
+  color: var(--accent-light);
+}
+
+.btn-danger {
+  background-color: #c6394c;
+  color: var(--accent-light);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.panel {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px var(--shadow-color);
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--accent-dark);
+}
+
+.input-group input, 
+.input-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgba(45, 51, 71, 0.7);
+  border: 1px solid rgba(249, 166, 108, 0.2);
+  border-radius: 8px;
+  color: var(--accent-light);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-group input:focus, 
+.input-group select:focus {
+  outline: none;
+  border-color: var(--secondary-medium);
+  box-shadow: 0 0 0 3px rgba(224, 122, 61, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--accent-dark);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dice {
+  width: 48px;
+  height: 48px;
+  margin: 0 8px;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  transform-origin: center;
+}
+
+.dice:hover {
+  transform: scale(1.15) rotate(10deg);
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
+}
+
+.dice-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1.5rem 0;
+  gap: 0.5rem;
+}
+
+/* Table Surface Styling */
+.game-table {
+  background: linear-gradient(145deg, var(--table-color), #194d1e);
+  border-radius: 50% / 25%;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 -10px 20px rgba(0,0,0,0.2);
+  border: 8px solid var(--table-border);
+  padding: 3rem;
+  margin: 0 auto 2rem;
+  position: relative;
+  max-width: 90%;
+  min-height: 500px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.game-table::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.05) 0%, transparent 30%);
+  pointer-events: none;
+}
+
+.game-table-inset {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 50% / 25%;
+  pointer-events: none;
+}
+
+.game-table::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.2) 100%);
+  pointer-events: none;
+}
+
+.player-position {
+  position: absolute;
+  transition: all 0.5s ease;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+}
+
+/* Player avatar and card styling */
+.player-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary-medium), var(--secondary-dark));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  position: relative;
+  margin-right: 10px;
+  border: 2px solid var(--accent-dark);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.player-card {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 50px;
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(4px);
+  min-width: 120px;
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.player-dice-compact {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+}
+
+.dice-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--secondary-light);
+  display: inline-block;
+  box-shadow: 0 0 3px rgba(249, 166, 108, 0.6);
+}
+
+.pulsing-dot {
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.8; }
+}
+
+/* Center bid display */
+.center-bid {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(45, 51, 71, 0.7);
+  padding: 10px 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  border: 1px solid var(--secondary-dark);
+  backdrop-filter: blur(5px);
+}
+
+.bid-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--secondary-light);
+}
+
+.bid-player {
+  font-size: 0.9rem;
+  color: var(--accent-dark);
+  margin-top: 5px;
+}
+
+/* Table center elements */
+.table-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.6;
+}
+
+.skull-icon {
+  font-size: 2.5rem;
+  margin-bottom: -10px;
+  animation: floatAnimation 3s ease-in-out infinite;
+}
+
+.crossed-swords {
+  font-size: 1.8rem;
+  transform: rotate(45deg);
+  margin-top: -5px;
+  animation: rotateAnimation 15s linear infinite;
+}
+
+@keyframes floatAnimation {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes rotateAnimation {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Result panel styling */
+.dudo-result {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.dudo-challenge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.challenger-info, .target-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-avatar-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary-medium), var(--secondary-dark));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.player-avatar-tiny {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary-medium), var(--secondary-dark));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  margin-right: 0.5rem;
+}
+
+.player-result-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.highlight-action {
+  color: #c6394c;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-shadow: 0 0 5px rgba(198, 57, 76, 0.5);
+}
+
+.bid-details {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: rgba(45, 51, 71, 0.5);
+  border-radius: 10px;
+}
+
+.bid-claim, .bid-actual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.bid-value, .bid-count {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--secondary-light);
+}
+
+.result-outcome {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.eliminated-text {
+  color: #c6394c;
+  font-weight: bold;
+  animation: pulse 1.5s infinite;
+}
+
+.dice-result {
+  position: relative;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.dice-badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  background-color: #4caf50;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  animation: pulse 1.5s infinite;
+}
+
+/* Your dice wrapper */
+.dice-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.dice-value {
+  position: absolute;
+  bottom: -18px;
+  background-color: var(--secondary-medium);
+  color: white;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+  .dice {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* Dice transition list animation */
+.dice-list-enter-active,
+.dice-list-leave-active {
+  transition: all 0.5s ease;
+}
+.dice-list-enter-from {
+  opacity: 0;
+  transform: scale(0.1) rotate(180deg);
+}
+.dice-list-leave-to {
+  opacity: 0;
+  transform: scale(0.1) rotate(-180deg);
+}
+
+/* Players list transitions */
+.players-list-enter-active,
+.players-list-leave-active {
+  transition: all 0.5s ease;
+}
+.players-list-enter-from {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+}
+.players-list-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+}
+
+/* Waiting animations */
+.waiting-turn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.waiting-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary-medium), var(--secondary-dark));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  animation: pulse 1.5s infinite;
+}
+
+.highlight-name {
+  color: var(--secondary-light);
+  font-weight: bold;
+}
+
+.waiting-animation {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--secondary-medium);
+  opacity: 0.6;
+}
+
+.dot1 {
+  animation: dotPulse 1.4s infinite;
+}
+
+.dot2 {
+  animation: dotPulse 1.4s infinite;
+  animation-delay: 0.2s;
+}
+
+.dot3 {
+  animation: dotPulse 1.4s infinite;
+  animation-delay: 0.4s;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+
+.rolling-animation {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.rolling-dice {
+  width: 60px;
+  height: 60px;
+}
+
+.game-state-message {
+  text-align: center;
+}
+
+/* Animation classes */
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.slide-enter-from {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+/* Dice Animations */
+.roll-dice {
+  animation: rollDice 0.8s ease-in-out;
+}
+
+@keyframes rollDice {
+  0% { transform: rotateZ(0deg) scale(1); }
+  20% { transform: rotateZ(-40deg) scale(1.2); }
+  40% { transform: rotateZ(180deg) scale(0.8); }
+  60% { transform: rotateZ(300deg) scale(1.1); }
+  80% { transform: rotateZ(340deg) scale(0.9); }
+  100% { transform: rotateZ(360deg) scale(1); }
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 8px 16px rgba(249, 166, 108, 0.4)); }
+  100% { transform: scale(1); filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+}
+
+.player-enter {
+  animation: playerEnter 0.6s ease-out forwards;
+  transform-origin: center;
+}
+
+@keyframes playerEnter {
+  0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+  60% { opacity: 1; transform: scale(1.1) translateY(-5px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.highlight-turn {
+  animation: highlightTurn 2s infinite;
+}
+
+@keyframes highlightTurn {
+  0% { box-shadow: 0 0 5px var(--secondary-light); }
+  50% { box-shadow: 0 0 20px var(--secondary-light), 0 0 10px var(--secondary-medium); }
+  100% { box-shadow: 0 0 5px var(--secondary-light); }
+}

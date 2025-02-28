@@ -1,0 +1,79 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background parchment -->
+  <rect width="800" height="600" fill="#d9c7a8" />
+  
+  <!-- Stained texture -->
+  <filter id="rough" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" stitchTiles="stitch" />
+    <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.7 0" />
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues="1 0.8" />
+      <feFuncG type="table" tableValues="0.9 0.6" />
+      <feFuncB type="table" tableValues="0.6 0.4" />
+    </feComponentTransfer>
+  </filter>
+  <rect width="800" height="600" filter="url(#rough)" opacity="0.3" />
+  
+  <!-- Map grid lines -->
+  <g stroke="#8b6b4c" stroke-width="1" opacity="0.4">
+    <path d="M0,100 H800 M0,200 H800 M0,300 H800 M0,400 H800 M0,500 H800" />
+    <path d="M100,0 V600 M200,0 V600 M300,0 V600 M400,0 V600 M500,0 V600 M600,0 V600 M700,0 V600" />
+  </g>
+  
+  <!-- Coastal outline -->
+  <path d="M100,50 C150,80 200,40 250,70 C300,100 350,60 400,90 C450,120 500,80 550,110 C600,140 650,100 700,130 L700,250 C650,230 600,260 550,240 C500,220 450,250 400,230 C350,210 300,240 250,220 C200,200 150,230 100,210 Z" 
+        fill="#c29f6c" stroke="#8b6b4c" stroke-width="2" />
+  
+  <!-- Island -->
+  <ellipse cx="400" cy="400" rx="150" ry="100" fill="#c29f6c" stroke="#8b6b4c" stroke-width="2" />
+  
+  <!-- Mountain range on island -->
+  <path d="M330,370 L360,330 L390,380 L420,340 L450,380 L480,330" 
+        fill="none" stroke="#8b6b4c" stroke-width="2" />
+  
+  <!-- Forests -->
+  <g fill="#8d697a" opacity="0.6">
+    <circle cx="350" cy="420" r="15" />
+    <circle cx="370" cy="430" r="12" />
+    <circle cx="330" cy="430" r="10" />
+    <circle cx="450" cy="420" r="15" />
+    <circle cx="470" cy="430" r="12" />
+    <circle cx="430" cy="430" r="10" />
+  </g>
+  
+  <!-- Treasure mark -->
+  <g transform="translate(400, 400)">
+    <path d="M-20,-20 L20,20 M-20,20 L20,-20" stroke="#8b3d3d" stroke-width="3" />
+    <circle cx="0" cy="0" r="15" fill="none" stroke="#8b3d3d" stroke-width="2" />
+  </g>
+  
+  <!-- Ship -->
+  <g transform="translate(200, 150)">
+    <path d="M0,0 L30,0 L25,-15 L5,-15 Z" fill="#544e68" />
+    <line x1="15" y1="-15" x2="15" y2="-30" stroke="#544e68" stroke-width="2" />
+    <path d="M15,-30 C25,-28 25,-17 15,-15" fill="#ffaa5e" />
+  </g>
+  
+  <!-- Compass rose -->
+  <g transform="translate(700, 500)">
+    <circle cx="0" cy="0" r="40" fill="none" stroke="#8b6b4c" stroke-width="1" />
+    <circle cx="0" cy="0" r="30" fill="none" stroke="#8b6b4c" stroke-width="1" />
+    <path d="M0,-40 L0,40 M-40,0 L40,0 M-28,-28 L28,28 M-28,28 L28,-28" stroke="#8b6b4c" stroke-width="1" />
+    <g fill="#8b3d3d">
+      <text x="0" y="-45" text-anchor="middle" font-family="serif" font-size="12">N</text>
+      <text x="45" y="0" text-anchor="middle" font-family="serif" font-size="12">E</text>
+      <text x="0" y="50" text-anchor="middle" font-family="serif" font-size="12">S</text>
+      <text x="-45" y="0" text-anchor="middle" font-family="serif" font-size="12">W</text>
+    </g>
+  </g>
+  
+  <!-- Sea monsters -->
+  <path d="M600,300 C620,290 630,310 650,300 C670,290 680,310 700,300" 
+        fill="none" stroke="#544e68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M680,280 C685,290 690,290 695,280" 
+        fill="none" stroke="#544e68" stroke-width="2" />
+  
+  <!-- Border design -->
+  <rect x="10" y="10" width="780" height="580" fill="none" stroke="#8b6b4c" stroke-width="5" rx="10" />
+  <rect x="20" y="20" width="760" height="560" fill="none" stroke="#8b6b4c" stroke-width="2" rx="5" />
+</svg>

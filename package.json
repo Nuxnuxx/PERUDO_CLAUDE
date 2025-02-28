@@ -1,0 +1,17 @@
+{
+  "name": "pirate-perudo",
+  "version": "1.0.0",
+  "description": "Pirate-themed Perudo dice game",
+  "scripts": {
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["perudo", "game", "dice", "pirate"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
