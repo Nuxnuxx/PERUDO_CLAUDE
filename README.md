@@ -63,16 +63,32 @@ git push -u origin main
    - Coolify will detect the `docker-compose.yml` file
    - Configure the build branch (usually `main` or `master`)
 
-5. **Set up your domain**
-   - In the "Settings" tab, add your domain or use the Coolify-provided subdomain
-   - Enable HTTPS if using your own domain
+5. **Set up your domains**
+   - In the "Settings" tab for **both** services (frontend and backend):
+     - Add your domain or use the Coolify-provided subdomain
+     - For the frontend, use your main domain (e.g., `perudo.yourdomain.com`)
+     - For the backend, use a subdomain (e.g., `perudo-api.yourdomain.com`)
+   - Enable HTTPS for both services if using your own domains
 
-6. **Deploy the application**
+6. **Configure environment variables**
+   - In the frontend service settings, add an environment variable:
+     - Name: `BACKEND_URL`
+     - Value: The complete URL of your backend service (e.g., `https://perudo-api.yourdomain.com`)
+   
+7. **Deploy the application**
    - Click "Save" and then "Deploy"
    - Coolify will build the Docker images and run the containers
+   - Deploy the backend first, then the frontend
 
-7. **Verify the deployment**
-   - Once deployment is complete, visit your domain to see the game running
+8. **Verify the deployment**
+   - Once deployment is complete, visit your frontend domain to see the game running
+   - Check the browser console to verify the Socket.IO connection to the backend
+
+9. **Troubleshooting**
+   - If you encounter connection issues between frontend and backend:
+     - Check if CORS is enabled on the backend
+     - Verify the BACKEND_URL environment variable is correctly set
+     - Make sure both services are up and running
 
 ### Manual Deployment to a VPS
 

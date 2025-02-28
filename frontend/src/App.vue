@@ -481,10 +481,25 @@ export default {
     
     // Connect to Socket.IO server
     const initializeSocket = () => {
-      // In production, connect to the same host that serves the webpage
-      // In development, connect to localhost:3000
+      // In production, use the BACKEND_URL environment variable if available 
+      // Otherwise connect to the same host, or fallback to localhost in development
       const isProd = process.env.NODE_ENV === 'production';
-      const socketUrl = isProd ? window.location.origin : 'http://localhost:3000';
+      let socketUrl;
+
+      // Check if we have a backend URL in window environment (injected via vite)
+      if (isProd && window.ENV && window.ENV.BACKEND_URL) {
+        socketUrl = window.ENV.BACKEND_URL;
+      } else if (isProd) {
+        // In Coolify environment, we should check for default backend URL pattern
+        // The backend URL might be in a different subdomain or path
+        const backendUrl = window.BACKEND_URL || window.location.origin;
+        socketUrl = backendUrl;
+      } else {
+        // Development environment
+        socketUrl = 'http://localhost:3000';
+      }
+      
+      console.log('Connecting to socket server at:', socketUrl);
       socket.value = io(socketUrl);
       
       // Handle connection

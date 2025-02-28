@@ -23,8 +23,12 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Copy and make the injection script executable
+COPY inject-backend-url.sh /docker-entrypoint.d/30-inject-backend-url.sh
+RUN chmod +x /docker-entrypoint.d/30-inject-backend-url.sh
+
 # Expose port
 EXPOSE 80
 
-# Start nginx
+# Start nginx with environment variable for the backend URL
 CMD ["nginx", "-g", "daemon off;"]

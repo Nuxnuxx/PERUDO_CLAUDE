@@ -6,10 +6,15 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 const server = http.createServer(app);
+// Set up more flexible CORS for Socket.IO in production
+const corsOrigin = process.env.FRONTEND_URL || "*";
+console.log(`Setting CORS origin to: ${corsOrigin}`);
+
 const io = socketIO(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
+    origin: corsOrigin,
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
