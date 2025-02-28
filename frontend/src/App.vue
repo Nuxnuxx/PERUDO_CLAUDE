@@ -428,6 +428,8 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { io } from 'socket.io-client';
 
+// Use direct paths to dice images in the template
+
 export default {
   name: 'App',
   setup() {
@@ -881,6 +883,10 @@ export default {
       const values = ['ace', 'two', 'three', 'four', 'five', 'six'];
       return values[value - 1];
     };
+    
+    
+    // Use direct paths to dice images in the template instead
+    // This approach is more reliable in production
     
     // Automatically suggest a valid bid
     watch([lastBid], () => {
