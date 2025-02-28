@@ -2,11 +2,10 @@
   <div class="app">
     <header>
       <h1>Pirate Perudo</h1>
-      <p class="subtitle">The Deceptive Dice Game of the Seven Seas</p>
-      <div class="header-decoration"></div>
+      <span class="subtitle">The Deceptive Dice Game of the Seven Seas</span>
     </header>
     
-    <main class="container">
+    <main class="container compact-layout">
       <transition name="fade" mode="out-in">
         <!-- HOME SCREEN -->
         <div v-if="screen === 'home'" class="home-screen panel">
@@ -169,6 +168,19 @@
             <div v-if="isPalaficoRound" class="palafico-alert">
               🏴‍☠️ Palafico Round! Aces are not wild, and only quantity can increase.
             </div>
+            
+            <div v-if="lastBid && gameState !== 'round_end'" class="current-bid-banner">
+              <span class="current-bid-label">Current Bid:</span>
+              <div class="current-bid-value">
+                {{ lastBid.playerName }} bid 
+                <span class="bid-highlight">{{ lastBid.quantity }} {{ valueToText(lastBid.value) }}{{ lastBid.quantity === 1 ? '' : 's' }}</span>
+                <img 
+                  :src="`/src/assets/dice-${lastBid.value}.svg`" 
+                  :alt="`Dice showing ${lastBid.value}`"
+                  class="bid-dice-icon"
+                />
+              </div>
+            </div>
           </div>
           
           <div class="game-table">
@@ -184,7 +196,14 @@
               <!-- Last bid display in table center -->
               <transition name="fade">
                 <div v-if="lastBid" class="center-bid">
-                  <div class="bid-value">{{ lastBid.quantity }} × {{ lastBid.value }}</div>
+                  <div class="bid-value">
+                    {{ lastBid.quantity }} {{ valueToText(lastBid.value) }}{{ lastBid.quantity === 1 ? '' : 's' }}
+                    <img 
+                      :src="`/src/assets/dice-${lastBid.value}.svg`" 
+                      :alt="`Dice showing ${lastBid.value}`"
+                      class="center-dice-icon"
+                    />
+                  </div>
                   <div class="bid-player">{{ lastBid.playerName }}</div>
                 </div>
               </transition>
@@ -232,7 +251,7 @@
           
           <div class="your-dice panel" v-if="myDice.length > 0">
             <h3>Your Hand</h3>
-            <div class="dice-container">
+            <div class="dice-container compact">
               <transition-group name="dice-list">
                 <div 
                   v-for="(die, index) in myDice" 
@@ -252,12 +271,7 @@
           </div>
           
           <div class="game-actions panel">
-            <transition name="fade">
-              <div v-if="lastBid && gameState !== 'round_end'" class="last-bid">
-                <h3>Last Bid:</h3>
-                <p>{{ lastBid.playerName }} bid: {{ lastBid.quantity }} {{ valueToText(lastBid.value) }}{{ lastBid.quantity === 1 ? '' : 's' }}</p>
-              </div>
-            </transition>
+            <!-- Removed duplicate last bid display from here -->
             
             <div v-if="currentTurn === playerId && gameState === 'bidding'" class="your-turn">
               <h3>Your Turn</h3>
@@ -971,11 +985,16 @@ export default {
 <style scoped>
 header {
   text-align: center;
-  padding: 1.5rem 0;
+  padding: 0.75rem 0;
   background-color: var(--primary-dark);
   position: relative;
   z-index: 10;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 70px;
 }
 
 header::after {
@@ -984,7 +1003,7 @@ header::after {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 3px;
   background: linear-gradient(90deg, 
     transparent 0%, 
     var(--secondary-medium) 20%, 
@@ -994,7 +1013,7 @@ header::after {
 }
 
 header h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
   background: linear-gradient(var(--secondary-light), var(--secondary-dark));
   -webkit-background-clip: text;
@@ -1002,16 +1021,18 @@ header h1 {
   text-shadow: 0 2px 10px rgba(249, 166, 108, 0.3);
   font-weight: bold;
   letter-spacing: 1px;
+  display: inline-block;
 }
 
 .subtitle {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  font-size: 1rem;
-  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  margin-left: 1rem;
   color: var(--accent-dark);
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  display: inline-block;
 }
 
 .home-screen .buttons,
@@ -1174,8 +1195,11 @@ header h1 {
   border-radius: 50%;
   background: var(--primary-dark);
   border: 8px solid var(--primary-medium);
-  margin: 2rem auto;
+  margin: 0 auto;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-table-inset {
@@ -1430,9 +1454,273 @@ header h1 {
   100% { opacity: 0.7; }
 }
 
-@media (max-width: 768px) {
-  .bid-controls {
+.current-bid-banner {
+  background-color: rgba(249, 166, 108, 0.15);
+  border: 1px solid var(--secondary-dark);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dice-container.compact {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  justify-content: flex-start;
+}
+
+.dice-container.compact .dice-wrapper {
+  transform: scale(0.85);
+  margin: -0.25rem;
+}
+
+/* Style dice to make them more visible and clear */
+.dice {
+  width: 50px;
+  height: 50px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+  .compact-layout .game-actions .bid-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .compact-layout .your-dice {
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    height: calc(100% - 1.5rem);
+  }
+  
+  .compact-layout .game-actions {
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    height: calc(100% - 1.5rem);
+  }
+  
+  .game-screen .round-result,
+  .game-screen .game-over {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+  }
+}
+
+.current-bid-label {
+  font-weight: bold;
+  color: var(--secondary-light);
+}
+
+.current-bid-value {
+  font-size: 1.1rem;
+  color: var(--accent-light);
+}
+
+.bid-highlight {
+  font-weight: bold;
+  color: var(--secondary-light);
+  background-color: rgba(249, 166, 108, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(249, 166, 108, 0.2);
+  margin: 0 0.25rem;
+}
+
+.bid-dice-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+}
+
+.center-dice-icon {
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
+
+/* Compact layout styles */
+.compact-layout {
+  max-width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+/* Default layout - Desktop/Laptop (>= 1024px) */
+.compact-layout .game-screen {
+  display: grid;
+  grid-template-areas:
+    "info info"
+    "dice table"
+    "actions table";
+  grid-template-columns: 350px 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 0.75rem;
+  min-height: 550px;
+  height: calc(100vh - 80px); /* Account for smaller header */
+  overflow: hidden;
+  width: 95vw;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.compact-layout .game-info {
+  grid-area: info;
+  margin-bottom: 0;
+  padding: 0.75rem;
+}
+
+.compact-layout .game-table {
+  grid-area: table;
+  height: 100%;
+  min-height: 300px;
+  margin: 0 auto;
+  width: min(95%, 600px);
+  align-self: center;
+  justify-self: center;
+}
+
+.compact-layout .your-dice {
+  grid-area: dice;
+  margin-bottom: 0;
+  padding: 0.75rem;
+  overflow-y: auto;
+}
+
+.compact-layout .game-actions {
+  grid-area: actions;
+  margin-bottom: 0;
+  padding: 0.75rem;
+  overflow-y: auto;
+}
+
+.compact-layout .round-result,
+.compact-layout .game-over {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  margin-top: 0.5rem;
+  z-index: 20;
+}
+
+/* Tablet layout (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .compact-layout .game-screen {
+    grid-template-areas:
+      "info info"
+      "table table"
+      "dice actions";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    padding: 0.5rem;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+  }
+  
+  .compact-layout .game-info {
+    grid-area: info;
+  }
+  
+  .compact-layout .game-table {
+    grid-area: table;
+    height: min(30vh, 250px);
+    width: min(95%, 500px);
+  }
+  
+  .compact-layout .your-dice {
+    grid-area: dice;
+    max-height: none;
+  }
+  
+  .compact-layout .game-actions {
+    grid-area: actions;
+    max-height: none;
+    display: flex;
     flex-direction: column;
+  }
+  
+  .compact-layout .round-result,
+  .compact-layout .game-over {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+  
+  .bid-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  
+  .action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .center-bid {
+    min-width: 175px;
+  }
+}
+
+/* Mobile layout (<768px) */
+@media (max-width: 767px) {
+  .compact-layout .game-screen {
+    grid-template-areas:
+      "info"
+      "table"
+      "dice"
+      "actions";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    height: auto;
+    min-height: calc(100vh - 80px);
+    gap: 0.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .compact-layout .game-info {
+    grid-area: info;
+    padding: 0.5rem;
+  }
+  
+  .compact-layout .game-table {
+    grid-area: table;
+    height: min(25vh, 200px);
+  }
+  
+  .compact-layout .your-dice {
+    grid-area: dice;
+    max-height: none;
+    padding: 0.5rem;
+  }
+  
+  .compact-layout .game-actions {
+    grid-area: actions;
+    max-height: none;
+    padding: 0.5rem;
+  }
+  
+  .compact-layout .round-result,
+  .compact-layout .game-over {
+    grid-area: result;
+    grid-row: 5;
+  }
+  
+  .bid-controls {
+    grid-template-columns: 1fr;
     gap: 0.5rem;
   }
   
@@ -1443,7 +1731,8 @@ header h1 {
   }
   
   .action-buttons {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
   
   header h1 {
@@ -1452,6 +1741,16 @@ header h1 {
   
   .subtitle {
     font-size: 1rem;
+  }
+  
+  .current-bid-banner {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  
+  .dice-container {
+    justify-content: center;
   }
 }
 </style>
